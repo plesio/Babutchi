@@ -1,5 +1,7 @@
 # 育児イベント記録装置 Babu Client 「ばぶっち」
 
+<img width="400" alt="image" src="https://user-images.githubusercontent.com/10129511/163509688-79d3895e-337e-4536-91fe-e006facfadec.png">
+
 スマホアプリに依存しない、Reactベースの育児イベント記録装置。
 
 ## 簡単な仕組み

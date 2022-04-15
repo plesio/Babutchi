@@ -66,3 +66,9 @@ Google Spreadsheet の記録したいシートを用意。
 - npm run build
 
 の結果をhttpdなどで動かす
+
+# Fixme / Todo
+
+環境をnextに置き換えて静的サイト生成しても問題ないレベルだなぁ
+
+URL設定値はJSON外だししても良いかなあって気もする。それなら、静的サイト生成で本当に問題無くなるなぁ。

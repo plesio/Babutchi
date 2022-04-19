@@ -17,7 +17,8 @@ const BabuButtonGroup: React.VFC<Props> = (props) => {
         {user.name}
       </Typography>
       <Box display="flex" flexDirection="row" pl="0.5rem" pt="0.5rem" pb="1rem">
-        <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column" p="0.75rem">
+        <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column"
+             p="0.75rem">
           <BabuButton
             // key={EventType.pee.id}
             title={`${EventType.pee.name}`}
@@ -31,7 +32,8 @@ const BabuButtonGroup: React.VFC<Props> = (props) => {
             sx={{ p: "0.5rem", width: "8rem", backgroundColor: user.bgColor }}
           />
         </Box>
-        <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column" p="0.75rem" ml="1rem">
+        <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column"
+             p="0.75rem" ml="1rem">
           <BabuButton
             // key={EventType.pee.id}
             title={`${EventType.sleep.name}`}
@@ -46,7 +48,8 @@ const BabuButtonGroup: React.VFC<Props> = (props) => {
           />
         </Box>
         {/* Milk */}
-        <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column" p="0.75rem" ml="1rem">
+        <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column"
+             p="0.75rem" ml="1rem">
           <BabuButton
             // key={EventType.pee.id}
             title={`${EventType.milk.name}`}
@@ -56,7 +59,8 @@ const BabuButtonGroup: React.VFC<Props> = (props) => {
         </Box>
         {/* Mother Milk */}
         {props.user.id == "mother" ? (
-          <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column" p="0.75rem" ml="1rem">
+          <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column"
+               p="0.75rem" ml="1rem">
             <BabuButton
               // key={EventType.poop.id}
               title={`${EventType.mother_milk_left.name}`}

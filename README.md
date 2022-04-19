@@ -48,30 +48,19 @@ Google Spreadsheet の記録したいシートを用意。
 
 ### ばぶっちの修正
 
-> src/config/xxx.ts
+> post_url.json
 
-の POST_URL のURLをGASでデプロイしたURLに書き換える。
+の "url" をGASでデプロイしたURLに書き換える。
 
 ### 使い方
 
-基本はviteの操作と同じ。
-
 - npm i
-- npm run dev
+- npm run export
+- npm run serve
 
-これを常駐しておく。
-
-または、
-
-- npm run build
-
-の結果をhttpdなどで動かす
+export で HTMLが out ディレクトリに格納されるので、それをつかってよしなに。
 
 # Fixme / Todo
-
-環境をnextに置き換えて静的サイト生成しても問題ないレベルだなぁ
-
-URL設定値はJSON外だししても良いかなあって気もする。それなら、静的サイト生成で本当に問題無くなるなぁ。
 
 ## vite(build SPA) -> nextjs(build Static HTML export)
 
@@ -79,7 +68,4 @@ URL設定値はJSON外だししても良いかなあって気もする。それ�
 - vite : 要求 7 件 / 548.85 KB / 549.90 KB 転送済み
 - nextjs : 要求 12 件 / 530.13 KB / 150.14 KB 転送済み
 
-nextjs 側に次のエラー
-
-Uncaught Error: Minified React error #418;
-Uncaught Error: Minified React error #423
+となって、少し速くなったので乗り換えてみた。

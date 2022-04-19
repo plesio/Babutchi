@@ -11,7 +11,11 @@ import AirlineSeatFlatIcon from "@mui/icons-material/AirlineSeatFlat";
 import AirlineSeatFlatAngledIcon from "@mui/icons-material/AirlineSeatFlatAngled";
 
 import FlatwareIcon from "@mui/icons-material/Flatware";
-import { BabuPostStatus, CommonSnackBarStatus, PostDataUrlStatus } from "@/util/RecoilUtil";
+import {
+  BabuPostStatus,
+  CommonSnackBarStatus,
+  PostDataUrlStatus,
+} from "@/util/RecoilUtil";
 
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -35,11 +39,11 @@ const BabuButton: React.VFC<BabuButtonProps> = (props) => {
       console.log(res);
       setSnackStatus({
         open: true,
-        text: `${babu.user.name} / ${babu.event.name} イベントを保存しました`
+        text: `${babu.user.name} / ${babu.event.name} イベントを保存しました`,
       });
       setBabuStatus(false);
     });
-  }, []);
+  }, [postUrl]);
 
   const buttonIcon = useMemo(() => {
     if (isDisabledBabuPost) {
@@ -49,8 +53,13 @@ const BabuButton: React.VFC<BabuButtonProps> = (props) => {
   }, [isDisabledBabuPost]);
 
   return (
-    <Button variant="contained" disabled={isDisabledBabuPost} onClick={handleOnClick} sx={props.sx}
-            startIcon={buttonIcon}>
+    <Button
+      variant="contained"
+      disabled={isDisabledBabuPost}
+      onClick={handleOnClick}
+      sx={props.sx}
+      startIcon={buttonIcon}
+    >
       <Typography variant="body1" component={"span"} sx={{ p: 0, m: 0 }}>
         {title}
       </Typography>
@@ -64,21 +73,75 @@ interface IconProps {
 
 const Icon: React.VFC<IconProps> = (props) => {
   if (props.babu.event.id === EventType.pee.id) {
-    return <WcIcon style={{ transform: "scale(1.5)", marginLeft: "-0.25rem", marginRight: "0.25rem" }} />;
+    return (
+      <WcIcon
+        style={{
+          transform: "scale(1.5)",
+          marginLeft: "-0.25rem",
+          marginRight: "0.25rem",
+        }}
+      />
+    );
   } else if (props.babu.event.id === EventType.poop.id) {
-    return <BabyChangingStationIcon
-      style={{ transform: "scale(1.5)", marginLeft: "-0.25rem", marginRight: "0.25rem" }} />;
+    return (
+      <BabyChangingStationIcon
+        style={{
+          transform: "scale(1.5)",
+          marginLeft: "-0.25rem",
+          marginRight: "0.25rem",
+        }}
+      />
+    );
   } else if (props.babu.event.id === EventType.sleep.id) {
-    return <AirlineSeatFlatIcon style={{ transform: "scale(1.5)", marginLeft: "-0.25rem", marginRight: "0.25rem" }} />;
+    return (
+      <AirlineSeatFlatIcon
+        style={{
+          transform: "scale(1.5)",
+          marginLeft: "-0.25rem",
+          marginRight: "0.25rem",
+        }}
+      />
+    );
   } else if (props.babu.event.id === EventType.wake_up.id) {
-    return <AirlineSeatFlatAngledIcon
-      style={{ transform: "scale(1.5)", marginLeft: "-0.25rem", marginRight: "0.25rem" }} />;
+    return (
+      <AirlineSeatFlatAngledIcon
+        style={{
+          transform: "scale(1.5)",
+          marginLeft: "-0.25rem",
+          marginRight: "0.25rem",
+        }}
+      />
+    );
   } else if (props.babu.event.id === EventType.mother_milk_left.id) {
-    return <FlatwareIcon style={{ transform: "scale(1.5)", marginLeft: "-0.25rem", marginRight: "0.25rem" }} />;
+    return (
+      <FlatwareIcon
+        style={{
+          transform: "scale(1.5)",
+          marginLeft: "-0.25rem",
+          marginRight: "0.25rem",
+        }}
+      />
+    );
   } else if (props.babu.event.id === EventType.mother_milk_right.id) {
-    return <FlatwareIcon style={{ transform: "scale(1.5)", marginLeft: "-0.25rem", marginRight: "0.25rem" }} />;
+    return (
+      <FlatwareIcon
+        style={{
+          transform: "scale(1.5)",
+          marginLeft: "-0.25rem",
+          marginRight: "0.25rem",
+        }}
+      />
+    );
   } else if (props.babu.event.id === EventType.milk.id) {
-    return <FlatwareIcon style={{ transform: "scale(1.5)", marginLeft: "-0.25rem", marginRight: "0.25rem" }} />;
+    return (
+      <FlatwareIcon
+        style={{
+          transform: "scale(1.5)",
+          marginLeft: "-0.25rem",
+          marginRight: "0.25rem",
+        }}
+      />
+    );
   }
   return <></>;
 };

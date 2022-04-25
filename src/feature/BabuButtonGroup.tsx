@@ -2,6 +2,8 @@ import BabuButton from "@/component/BabuButton";
 import { EventType, UserType } from "@/model/BabuModel";
 import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import MilkAmountSelector from "@/component/MilkAmountSelector";
+import {useState} from "react";
 
 interface Props {
   user: UserType;
@@ -9,6 +11,8 @@ interface Props {
 
 const BabuButtonGroup: React.VFC<Props> = (props) => {
   const { user } = props;
+
+  const [milkAmount,setMilkAmount] = useState<number>(40);
 
   return (
     <>
@@ -50,10 +54,14 @@ const BabuButtonGroup: React.VFC<Props> = (props) => {
         {/* Milk */}
         <Box borderRadius={"0.5rem"} border={2} borderColor={grey["300"]} display="flex" flexDirection="column"
              p="0.75rem" ml="1rem">
+          <MilkAmountSelector
+            milkAmount={milkAmount}
+            setMilkAmount={setMilkAmount}
+          />
           <BabuButton
             // key={EventType.pee.id}
             title={`${EventType.milk.name}`}
-            babu={{ user, event: EventType.milk }}
+            babu={{ user, event: EventType.milk, opt:`${milkAmount}` }}
             sx={{ mb: "0.75rem", p: "0.5rem", width: "8rem", backgroundColor: user.bgColor }}
           />
         </Box>

@@ -11,6 +11,7 @@ function doPost(event) {
   const timeCell = sheet.getRange(newLastRow, 1);
   const reportCell = sheet.getRange(newLastRow, 2);
   const eventCell = sheet.getRange(newLastRow, 3);
+  const optCell = sheet.getRange(newLastRow, 4);
   // --
   // eslint-disable-next-line no-undef
   const formatDate = Utilities.formatDate(

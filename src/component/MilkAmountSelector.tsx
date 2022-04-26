@@ -15,7 +15,7 @@ const MilkAmountSelector: React.VFC<Props> = (props) => {
   }, [])
 
   return (
-    <FormControl sx={{  my:"0.75rem", mt:0, minWidth: 120 }} size="small">
+    <FormControl sx={{mb: "0.75rem", width: "8rem",}} size="small">
       <InputLabel id="milk_amount_id">ミルク量</InputLabel>
       <Select
         labelId="milk_amount_id"
@@ -26,6 +26,7 @@ const MilkAmountSelector: React.VFC<Props> = (props) => {
       >
         <MenuItem value={40}>40 ml</MenuItem>
         <MenuItem value={80}>80 ml</MenuItem>
+        <MenuItem value={100}>100 ml</MenuItem>
         <MenuItem value={120}>120 ml</MenuItem>
         <MenuItem value={160}>160 ml</MenuItem>
         <MenuItem value={200}>200 ml</MenuItem>

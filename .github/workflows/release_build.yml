@@ -29,7 +29,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            release.zip
-          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+            ./out/release.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
           draft: true

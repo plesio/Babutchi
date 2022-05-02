@@ -21,15 +21,17 @@ jobs:
         # npm ci は使わない。
       - name: Build
         run: npm run export
-      - name: zipper
-        run: |
-          cd out
-          zip release.zip **
+      - name: release.zip
+        uses: papeloto/action-zip@v1
+        with:
+          files: out/
+          recursive: false
+          dest: release.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ./out/release.zip
+            ./release.zip
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
           draft: true

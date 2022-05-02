@@ -24,7 +24,7 @@ jobs:
       - name: zipper
         run: |
           cd out
-          zip release *.*
+          zip release.zip *.*
       - name: Release
         uses: softprops/action-gh-release@v1
         with:

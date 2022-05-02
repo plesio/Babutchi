@@ -21,7 +21,8 @@ jobs:
         # npm ci は使わない。
       - name: Build
         run: npm run export
-        run : |
+      - name: zipper
+        run: |
           cd out
           zip release *.*
       - name: Release
@@ -32,4 +33,3 @@ jobs:
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           generate_release_notes: true
           draft: true
-         

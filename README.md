@@ -30,6 +30,12 @@
 
 ## 最短運用方法
 
+### release.zip の DL
+
+リリースから最新を落として、各種 html,js と post_url.json が入っていることを確認する。
+
+post_url.json は後述するが、中身を修正する必要がある。
+
 ### SpreadSheet の用意
 
 Google Spreadsheet の記録したいシートを用意。
@@ -38,7 +44,7 @@ Google Spreadsheet の記録したいシートを用意。
 
 作った SpreadSheet から「拡張機能」→「GAS」で、GAS を関連付けた状態で開く。
 
-新規の.gs を起こして、
+新規の.gs を起こして、ソースに含まれている。
 
 > ext_src/babu_report.js
 
@@ -46,19 +52,26 @@ Google Spreadsheet の記録したいシートを用意。
 
 その gs ファイルをデプロイして、URL を生成する。 デプロイする際、実行ユーザーは自分自身にしないと、POST 要求時にログインを要求されてばぶっち上から気軽に使えない。
 
-### ばぶっちの修正
+### 利用するためのファイル修正
 
 > post_url.json
 
 の "url" を GAS でデプロイした URL に書き換える。
 
-### 使い方
+# ビルド方法
 
 - npm i
 - npm run export
-- npm run serve
 
 export で HTML が out ディレクトリに格納されるので、それをつかってよしなに。
+
+- npm run serve
+
+や
+
+- npm run dev
+
+で動作を見ることが可能。ここらへんは nextjs の挙動のまま。
 
 # MEMO: vite(build SPA) -> nextjs(build Static HTML export)
 

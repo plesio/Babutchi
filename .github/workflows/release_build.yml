@@ -1,16 +1,6 @@
 name: Release Build
 
-### -- プッシュしたら実行ではない
-# on: [push]
-
-### -- masterにマージしたら実行ではない
-# on:
-#   pull_request:
-#     types: [closed]
-#     branches:
-#       - master
-
-### -- リリースタグがセットされた実行
+### -- リリースタグがセットされたら実行
 on:
   push:
     tags:
@@ -36,7 +26,6 @@ jobs:
           zip release *.*
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             release.zip

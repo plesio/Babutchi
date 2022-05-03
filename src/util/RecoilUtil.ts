@@ -6,6 +6,11 @@ export const PostDataUrlStatus = atom<string>({
   default: "/"
 });
 
+export const ReloadForceDataUrlStatus = atom<boolean>({
+  key: "reload_post_data_status",
+  default: false
+});
+
 export const CommonSnackBarStatus = atom<OpenSnackBarProps>({
   key: "open_snackbar",
   default: { text: "", open: false }

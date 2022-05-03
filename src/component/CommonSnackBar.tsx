@@ -8,16 +8,19 @@ export interface OpenSnackBarProps {
   open: boolean;
 }
 
-const CommonSnackBar: React.VFC = () => {
+const CommonSnackBar: React.FC = () => {
   const [state, setState] = useRecoilState(CommonSnackBarStatus);
 
-  const handleClose = useCallback((event: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  const handleClose = useCallback(
+    (event: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === "clickaway") {
+        return;
+      }
 
-    setState({ text: "", open: false });
-  }, []);
+      setState({ text: "", open: false });
+    },
+    []
+  );
 
   return (
     <Snackbar open={state.open} autoHideDuration={6000} onClose={handleClose}>

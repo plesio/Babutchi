@@ -25,7 +25,7 @@ interface BabuButtonProps {
   sx?: SxProps;
 }
 
-const BabuButton: React.VFC<BabuButtonProps> = (props) => {
+const BabuButton: React.FC<BabuButtonProps> = (props) => {
   // -- props
   const { title, babu } = props;
   // --
@@ -71,7 +71,7 @@ interface IconProps {
   babu: Babu;
 }
 
-const Icon: React.VFC<IconProps> = (props) => {
+const Icon: React.FC<IconProps> = (props) => {
   if (props.babu.event.id === EventType.pee.id) {
     return (
       <WcIcon

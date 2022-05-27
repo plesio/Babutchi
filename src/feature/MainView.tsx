@@ -5,31 +5,38 @@ import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { RecoilRoot, useRecoilState } from "recoil";
 import BabuButtonGroup from "./BabuButtonGroup";
-import { PostDataUrlStatus } from "@/util/RecoilUtil";
-import { getPostUrl } from "@/network/get";
+import { UrlsJsonStatus } from "@/util/RecoilUtil";
+import { getUrls } from "@/network/get";
+import {CookiesProvider} from "react-cookie";
+import LastMilk from "@/feature/LastMilk";
 
-const MainView: React.VFC = () => {
+const MainView: React.FC = () => {
 
   return (
     <>
+      <CookiesProvider>
       <RecoilRoot>
         <CommonSnackBar />
         <BabuTitle>ばぶっち</BabuTitle>
         <Box pt="2rem">
+          <LastMilk />
+        </Box>
+        <Box pt="1rem">
           <Buttons />
         </Box>
       </RecoilRoot>
+      </CookiesProvider>
     </>
   );
 };
 
-const Buttons: React.VFC = () => {
+const Buttons: React.FC = () => {
 
-  const [, setPostUrl] = useRecoilState(PostDataUrlStatus);
+  const [, setUrls] = useRecoilState(UrlsJsonStatus);
 
   // --
   useEffect(() => {
-    getPostUrl(setPostUrl);
+    getUrls(setUrls);
   }, []);
 
   return (

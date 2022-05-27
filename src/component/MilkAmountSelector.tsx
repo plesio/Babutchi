@@ -1,5 +1,5 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {ReactNode, useCallback} from "react";
+import React, {ReactNode, useCallback} from "react";
 
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   setMilkAmount: (n: number) => void;
 }
 
-const MilkAmountSelector: React.VFC<Props> = (props) => {
+const MilkAmountSelector: React.FC<Props> = (props) => {
   const {milkAmount, setMilkAmount} = props
 
   const onChange = useCallback((event: SelectChangeEvent<number>, _child: ReactNode) => {

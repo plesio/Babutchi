@@ -8,7 +8,7 @@ export interface OpenSnackBarProps {
   open: boolean;
 }
 
-const CommonSnackBar: React.VFC = () => {
+const CommonSnackBar: React.FC = () => {
   const [state, setState] = useRecoilState(CommonSnackBarStatus);
 
   const handleClose = useCallback((event: React.SyntheticEvent | Event, reason?: string) => {

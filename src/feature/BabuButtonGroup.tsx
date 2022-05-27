@@ -3,13 +3,13 @@ import {EventType, UserType} from "@/model/BabuModel";
 import {Box, Typography} from "@mui/material";
 import {grey} from "@mui/material/colors";
 import MilkAmountSelector from "@/component/MilkAmountSelector";
-import {useState} from "react";
+import React, {useState} from "react";
 
 interface Props {
   user: UserType;
 }
 
-const BabuButtonGroup: React.VFC<Props> = (props) => {
+const BabuButtonGroup: React.FC<Props> = (props) => {
   const {user} = props;
 
   const [milkAmount, setMilkAmount] = useState<number>(40);

@@ -1,8 +1,8 @@
-import {Babu, EventType} from "@/model/BabuModel";
-import {postBabu} from "@/network/post";
-import {Button, SxProps, Typography} from "@mui/material";
-import React, {useCallback, useMemo} from "react";
-import {useRecoilState} from "recoil";
+import { Babu, EventType } from "@/model/BabuModel";
+import { postBabu } from "@/network/post";
+import { Button, SxProps, Typography } from "@mui/material";
+import React, { useCallback, useMemo } from "react";
+import { useRecoilState } from "recoil";
 
 import BabyChangingStationIcon from "@mui/icons-material/BabyChangingStation";
 import WcIcon from "@mui/icons-material/Wc";
@@ -27,7 +27,7 @@ interface BabuButtonProps {
 
 const BabuButton: React.FC<BabuButtonProps> = (props) => {
   // -- props
-  const {title, babu} = props;
+  const { title, babu } = props;
   // --
   const [postUrl] = useRecoilState(UrlsJsonStatus);
   const [isDisabledBabuPost, setBabuStatus] = useRecoilState(BabuPostStatus);
@@ -47,9 +47,9 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
 
   const buttonIcon = useMemo(() => {
     if (isDisabledBabuPost) {
-      return <CircularProgress size="1.5rem"/>;
+      return <CircularProgress size="1.5rem" />;
     }
-    return <Icon babu={babu}/>;
+    return <Icon babu={babu} />;
   }, [isDisabledBabuPost]);
 
   return (
@@ -60,7 +60,7 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
       sx={props.sx}
       startIcon={buttonIcon}
     >
-      <Typography variant="body1" component={"span"} sx={{p: 0, m: 0}}>
+      <Typography variant="body1" component={"span"} sx={{ p: 0, m: 0 }}>
         {title}
       </Typography>
     </Button>

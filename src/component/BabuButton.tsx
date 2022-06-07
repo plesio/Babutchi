@@ -43,7 +43,7 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
       });
       setBabuStatus(false);
     });
-  }, [postUrl]);
+  }, [babu, postUrl]);
 
   const buttonIcon = useMemo(() => {
     if (isDisabledBabuPost) {

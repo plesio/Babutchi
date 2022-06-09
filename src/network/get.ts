@@ -4,7 +4,7 @@ export interface UrlsJson {
 
 export const EMPTY_URLS = {post_record_url: "/", reload_last_milk_url: "/"}
 
-export const getUrls = (
+export const getUrl = (
   callbackFetch: (urls: string) => void
 ): void => {
   // GET送信

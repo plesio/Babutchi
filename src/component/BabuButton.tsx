@@ -11,13 +11,11 @@ import AirlineSeatFlatIcon from "@mui/icons-material/AirlineSeatFlat";
 import AirlineSeatFlatAngledIcon from "@mui/icons-material/AirlineSeatFlatAngled";
 
 import FlatwareIcon from "@mui/icons-material/Flatware";
-import {
-  BabuPostStatus,
-  CommonSnackBarStatus,
-  UrlsJsonStatus,
-} from "@/util/RecoilUtil";
+import { BabuPostStatus, CommonSnackBarStatus } from "@/util/RecoilUtil";
 
 import CircularProgress from "@mui/material/CircularProgress";
+import {BABUTCHI_REQUEST_URL, useLocalStorageState} from "@/util/LocalStorageUtil";
+
 
 interface BabuButtonProps {
   title: string;
@@ -29,13 +27,14 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
   // -- props
   const { title, babu } = props;
   // --
-  const [postUrl] = useRecoilState(UrlsJsonStatus);
   const [isDisabledBabuPost, setBabuStatus] = useRecoilState(BabuPostStatus);
   const [, setSnackStatus] = useRecoilState(CommonSnackBarStatus);
+  // --
+  const [url] = useLocalStorageState(BABUTCHI_REQUEST_URL)
 
   const handleOnClick = useCallback(() => {
     setBabuStatus(true);
-    postBabu(babu, postUrl, (res) => {
+    postBabu(babu, url, (res) => {
       console.log(res);
       setSnackStatus({
         open: true,
@@ -43,7 +42,7 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
       });
       setBabuStatus(false);
     });
-  }, [babu, postUrl]);
+  }, [babu, url]);
 
   const buttonIcon = useMemo(() => {
     if (isDisabledBabuPost) {

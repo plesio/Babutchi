@@ -1,6 +1,6 @@
 import { CommonSnackBarStatus } from "@/util/RecoilUtil";
 import { Alert, Snackbar } from "@mui/material";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { useRecoilState } from "recoil";
 
 export interface OpenSnackBarProps {
@@ -11,13 +11,16 @@ export interface OpenSnackBarProps {
 const CommonSnackBar: React.FC = () => {
   const [state, setState] = useRecoilState(CommonSnackBarStatus);
 
-  const handleClose = useCallback((event: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  const handleClose = useCallback(
+    (event: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === "clickaway") {
+        return;
+      }
 
-    setState({ text: "", open: false });
-  }, []);
+      setState({ text: "", open: false });
+    },
+    []
+  );
 
   return (
     <Snackbar open={state.open} autoHideDuration={6000} onClose={handleClose}>

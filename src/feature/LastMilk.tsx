@@ -2,40 +2,24 @@ import React, { useCallback, useMemo, useState } from "react";
 
 import { getLastMilk } from "@/network/get";
 import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
-import { useCookies } from "react-cookie";
 
 import CachedIcon from "@mui/icons-material/Cached";
+
 import {
   BABUTCHI_LAST_MILK,
   BABUTCHI_REQUEST_URL,
-  MAX_AGE_10_YEARS,
-} from "@/util/CookieUtil";
+  useLocalStorageState,
+} from "@/util/LocalStorageUtil";
 
 const LastMilk: React.FC = () => {
   //
   const [isLoading, setLoading] = useState<boolean>(false);
   //
-  const [cookies, setCookie, _removeCookie] = useCookies<string>([
-    BABUTCHI_REQUEST_URL,
+  const [url] = useLocalStorageState(BABUTCHI_REQUEST_URL);
+  const [lastMilk, setLastMilk] = useLocalStorageState(
     BABUTCHI_LAST_MILK,
-  ]);
-  // from cookies
-  const url = useMemo((): string => {
-    if (!cookies?.BABUTCHI_REQUEST_URL) {
-      return "/";
-    }
-    return cookies.BABUTCHI_REQUEST_URL;
-  }, [cookies, cookies.BABUTCHI_REQUEST_URL]);
-  const dateStr = useMemo((): string => {
-    // console.log("useMemo dateStr ,", cookies);
-    if (
-      !cookies?.BABUTCHI_LAST_MILK ||
-      cookies.BABUTCHI_LAST_MILK === "undefined"
-    ) {
-      return "undefined";
-    }
-    return cookies.BABUTCHI_LAST_MILK;
-  }, [cookies, cookies.BABUTCHI_LAST_MILK]);
+    "undefined"
+  );
 
   const handleReload = useCallback(() => {
     setLoading(true);
@@ -43,10 +27,7 @@ const LastMilk: React.FC = () => {
       // console.log("handleReload ret ,", ret);
       if (ret) {
         // const d = dayjs(cookies.name).format("MM/DD HH:mm:ss");
-        setCookie(BABUTCHI_LAST_MILK, ret, {
-          sameSite: "strict",
-          maxAge: MAX_AGE_10_YEARS /* 10 years */,
-        });
+        setLastMilk(ret);
       }
       setLoading(false);
     });
@@ -68,7 +49,7 @@ const LastMilk: React.FC = () => {
         {`Last Milk : `}
       </Typography>
       <Typography variant={"body1"} component={"span"} pl={"0.5rem"}>
-        {dateStr}
+        {lastMilk}
       </Typography>
     </Box>
   );

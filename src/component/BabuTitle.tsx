@@ -11,17 +11,9 @@ import {
   useScrollTrigger,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useCookies } from "react-cookie";
-import {
-  BABUTCHI_IS_LOCAL_MODE,
-  BABUTCHI_LAST_MILK,
-  BABUTCHI_REQUEST_URL,
-  MAX_AGE_10_YEARS,
-} from "@/util/CookieUtil";
-import { CookieSetOptions } from "universal-cookie";
 
 import Stack from "@mui/material/Stack";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -29,6 +21,12 @@ import SaveIcon from "@mui/icons-material/Save";
 
 import { useRecoilState } from "recoil";
 import { CommonSnackBarStatus } from "@/util/RecoilUtil";
+import {
+  BABUTCHI_IS_LOCAL_MODE,
+  BABUTCHI_LAST_MILK,
+  BABUTCHI_REQUEST_URL,
+  useLocalStorageState,
+} from "@/util/LocalStorageUtil";
 
 interface HideOnScrollProps {
   /**
@@ -83,25 +81,6 @@ const SettingButton = () => {
   //
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   //
-  const [cookies, setCookie, _removeCookie] = useCookies<string>([
-    BABUTCHI_REQUEST_URL,
-    // BABUTCHI_LAST_MILK,
-    BABUTCHI_IS_LOCAL_MODE,
-  ]);
-  // from cookies
-  const isLocalMode = useMemo((): boolean => {
-    if (!cookies?.BABUTCHI_IS_LOCAL_MODE) {
-      return false;
-    }
-    return cookies.BABUTCHI_IS_LOCAL_MODE === "true";
-  }, [cookies, cookies.BABUTCHI_IS_LOCAL_MODE]);
-  const url = useMemo((): string => {
-    if (!cookies?.BABUTCHI_REQUEST_URL) {
-      return "/";
-    }
-    return cookies.BABUTCHI_REQUEST_URL;
-  }, [cookies, cookies.BABUTCHI_REQUEST_URL]);
-
   const handleMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   }, []);
@@ -137,44 +116,30 @@ const SettingButton = () => {
         onClose={handleClose}
       >
         <MenuItem disableRipple disableTouchRipple>
-          <IsLocalModeToggle isLocalMode={isLocalMode} setCookie={setCookie} />
+          <IsLocalModeToggle />
         </MenuItem>
 
         <MenuItem disableRipple disableTouchRipple>
-          <SetterUrl
-            url={url}
-            isLocalMode={isLocalMode}
-            setCookie={setCookie}
-          />
+          <SetterUrl />
         </MenuItem>
       </Menu>
     </>
   );
 };
 
-interface IsLocalModeToggleProps {
-  // cookies: { [p: string]: any };
-  isLocalMode: boolean;
-  setCookie: (
-    name: string,
-    value: any,
-    options?: CookieSetOptions | undefined
-  ) => void;
-}
-
-const IsLocalModeToggle: React.FC<IsLocalModeToggleProps> = (props) => {
+const IsLocalModeToggle: React.FC = () => {
   // --
-  const { isLocalMode, setCookie } = props;
+  const [isLocalMode, setLocalMode] = useLocalStorageState(
+    BABUTCHI_IS_LOCAL_MODE
+  );
+  // const [url] = useLocalStorageState(BABUTCHI_REQUEST_URL);
   // -- recoil
   const [, setSnackStatus] = useRecoilState(CommonSnackBarStatus);
 
   const handleChangeLocalMode = useCallback(
     (_e: React.MouseEvent<HTMLElement>, value: boolean) => {
       // change event
-      setCookie(BABUTCHI_IS_LOCAL_MODE, `${value}`, {
-        sameSite: "strict",
-        maxAge: MAX_AGE_10_YEARS /* 10 years */,
-      });
+      setLocalMode(`${value}`);
       // open snackbar
       setSnackStatus({
         open: true,
@@ -187,7 +152,7 @@ const IsLocalModeToggle: React.FC<IsLocalModeToggleProps> = (props) => {
   return (
     <ToggleButtonGroup
       color="primary"
-      value={isLocalMode}
+      value={isLocalMode === "true"}
       exclusive
       onChange={handleChangeLocalMode}
     >
@@ -197,23 +162,14 @@ const IsLocalModeToggle: React.FC<IsLocalModeToggleProps> = (props) => {
   );
 };
 
-interface SetterUrlProps {
-  url: string;
-  isLocalMode: boolean;
-  setCookie: (
-    name: string,
-    value: any,
-    options?: CookieSetOptions | undefined
-  ) => void;
-}
-
-const SetterUrl: React.FC<SetterUrlProps> = (props) => {
+const SetterUrl: React.FC = () => {
   // --
-  const { url, isLocalMode, setCookie } = props;
+  const [isLocalMode] = useLocalStorageState(BABUTCHI_IS_LOCAL_MODE);
+  const [url, setUrl] = useLocalStorageState(BABUTCHI_REQUEST_URL);
   // --
   const [urlTxt, setUrlTxt] = useState<string>(url);
   const isSaveDisabled = useMemo(() => {
-    return isLocalMode || url === urlTxt;
+    return isLocalMode === "true" || url === urlTxt;
   }, [url, urlTxt, isLocalMode]);
   //
   const [, setSnackStatus] = useRecoilState(CommonSnackBarStatus);
@@ -239,16 +195,16 @@ const SetterUrl: React.FC<SetterUrlProps> = (props) => {
 
   const handleSave = useCallback(() => {
     // change event
-    setCookie(BABUTCHI_REQUEST_URL, `${urlTxt}`, {
-      sameSite: "strict",
-      maxAge: MAX_AGE_10_YEARS /* 10 years */,
-      secure: isLocalMode ? undefined : true,
-    });
+    setUrl(urlTxt);
     setSnackStatus({
       open: true,
       text: `URLを更新しました`,
     });
-  }, []);
+  }, [urlTxt]);
+
+  useEffect(() => {
+    setUrlTxt(url);
+  }, [url]);
 
   return (
     <>
@@ -258,7 +214,7 @@ const SetterUrl: React.FC<SetterUrlProps> = (props) => {
           id="post_url"
           size="small"
           onChange={handleChangeTxt}
-          inputProps={{ readOnly: isLocalMode }}
+          inputProps={{ readOnly: isLocalMode === "true" }}
         />
         <IconButton color="secondary" onClick={handleCopy}>
           <ContentCopyIcon />

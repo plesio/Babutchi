@@ -5,26 +5,23 @@ import { Box } from "@mui/material";
 import React from "react";
 import { RecoilRoot } from "recoil";
 import BabuButtonGroup from "./BabuButtonGroup";
-import { CookiesProvider } from "react-cookie";
 import LastMilk from "@/feature/LastMilk";
 import Initials from "@/feature/Initials";
 
 const MainView: React.FC = () => {
   return (
     <>
-      <CookiesProvider>
-        <RecoilRoot>
-          <Initials /* Cookie/Recoil 初期化 */ />
-          <CommonSnackBar />
-          <BabuTitle>ばぶっち</BabuTitle>
-          <Box pt="0rem">
-            <LastMilk />
-          </Box>
-          <Box pt="1rem">
-            <Buttons />
-          </Box>
-        </RecoilRoot>
-      </CookiesProvider>
+      <RecoilRoot>
+        <Initials /* LocalStorage/Recoil 初期化 */ />
+        <CommonSnackBar />
+        <BabuTitle>ばぶっち</BabuTitle>
+        <Box pt="0rem">
+          <LastMilk />
+        </Box>
+        <Box pt="1rem">
+          <Buttons />
+        </Box>
+      </RecoilRoot>
     </>
   );
 };

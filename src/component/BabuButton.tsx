@@ -14,8 +14,8 @@ import FlatwareIcon from "@mui/icons-material/Flatware";
 import { BabuPostStatus, CommonSnackBarStatus } from "@/util/RecoilUtil";
 
 import CircularProgress from "@mui/material/CircularProgress";
-import { useCookies } from "react-cookie";
-import { BABUTCHI_LAST_MILK, BABUTCHI_REQUEST_URL } from "@/util/CookieUtil";
+import {BABUTCHI_REQUEST_URL, useLocalStorageState} from "@/util/LocalStorageUtil";
+
 
 interface BabuButtonProps {
   title: string;
@@ -30,14 +30,7 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
   const [isDisabledBabuPost, setBabuStatus] = useRecoilState(BabuPostStatus);
   const [, setSnackStatus] = useRecoilState(CommonSnackBarStatus);
   // --
-  const [cookies] = useCookies<string>([BABUTCHI_REQUEST_URL]);
-  // from cookies
-  const url = useMemo((): string => {
-    if (!cookies?.BABUTCHI_REQUEST_URL) {
-      return "/";
-    }
-    return cookies.BABUTCHI_REQUEST_URL;
-  }, [cookies, cookies.BABUTCHI_REQUEST_URL]);
+  const [url] = useLocalStorageState(BABUTCHI_REQUEST_URL)
 
   const handleOnClick = useCallback(() => {
     setBabuStatus(true);

@@ -5,7 +5,11 @@ import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
 import { useCookies } from "react-cookie";
 
 import CachedIcon from "@mui/icons-material/Cached";
-import { BABUTCHI_LAST_MILK, BABUTCHI_REQUEST_URL } from "@/util/CookieUtil";
+import {
+  BABUTCHI_LAST_MILK,
+  BABUTCHI_REQUEST_URL,
+  MAX_AGE_10_YEARS,
+} from "@/util/CookieUtil";
 
 const LastMilk: React.FC = () => {
   //
@@ -21,7 +25,7 @@ const LastMilk: React.FC = () => {
       return "/";
     }
     return cookies.BABUTCHI_REQUEST_URL;
-  }, [cookies]);
+  }, [cookies, cookies.BABUTCHI_REQUEST_URL]);
   const dateStr = useMemo((): string => {
     // console.log("useMemo dateStr ,", cookies);
     if (
@@ -31,7 +35,7 @@ const LastMilk: React.FC = () => {
       return "undefined";
     }
     return cookies.BABUTCHI_LAST_MILK;
-  }, [cookies]);
+  }, [cookies, cookies.BABUTCHI_LAST_MILK]);
 
   const handleReload = useCallback(() => {
     setLoading(true);
@@ -41,7 +45,7 @@ const LastMilk: React.FC = () => {
         // const d = dayjs(cookies.name).format("MM/DD HH:mm:ss");
         setCookie(BABUTCHI_LAST_MILK, ret, {
           sameSite: "strict",
-          maxAge: 60 * 60 * 24 * 2 /* 2 days */,
+          maxAge: MAX_AGE_10_YEARS /* 10 years */,
         });
       }
       setLoading(false);

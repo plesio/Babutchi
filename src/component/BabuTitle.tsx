@@ -242,7 +242,7 @@ const SetterUrl: React.FC<SetterUrlProps> = (props) => {
     setCookie(BABUTCHI_REQUEST_URL, `${urlTxt}`, {
       sameSite: "strict",
       maxAge: MAX_AGE_10_YEARS /* 10 years */,
-      secure: isLocalMode ? true : undefined,
+      secure: isLocalMode ? undefined : true,
     });
     setSnackStatus({
       open: true,

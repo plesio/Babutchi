@@ -37,7 +37,7 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
       return "/";
     }
     return cookies.BABUTCHI_REQUEST_URL;
-  }, [cookies]);
+  }, [cookies, cookies.BABUTCHI_REQUEST_URL]);
 
   const handleOnClick = useCallback(() => {
     setBabuStatus(true);

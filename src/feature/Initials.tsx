@@ -23,7 +23,7 @@ const Initials: React.FC = () => {
       return false;
     }
     return cookies.BABUTCHI_IS_LOCAL_MODE === "true";
-  }, [cookies]);
+  }, [cookies, cookies.BABUTCHI_IS_LOCAL_MODE]);
 
   // -- callback
   const handleUrl = useCallback(
@@ -31,7 +31,7 @@ const Initials: React.FC = () => {
       setCookie(BABUTCHI_REQUEST_URL, url, {
         sameSite: "strict",
         maxAge: MAX_AGE_10_YEARS /* 10 years */,
-        secure: isLocalMode ? true : undefined,
+        secure: isLocalMode ? undefined : true,
       });
     },
     [setCookie]
@@ -46,7 +46,7 @@ const Initials: React.FC = () => {
     }
   }, [isLocalMode]);
 
-  return <div/>
+  return <div />;
 };
 
 export default Initials;

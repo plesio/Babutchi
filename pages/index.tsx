@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import MainView from "../src/feature/MainView";
 
-const Index: NextPage = () => {
+const Index: NextPage = ({}) => {
   return (
     <>
       <Head>
@@ -16,5 +16,11 @@ const Index: NextPage = () => {
     </>
   );
 };
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}
 
 export default Index;

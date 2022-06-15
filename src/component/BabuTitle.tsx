@@ -1,7 +1,9 @@
 import {
   AppBar,
   Box,
+  Button,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Slide,
@@ -23,10 +25,11 @@ import { useRecoilState } from "recoil";
 import { CommonSnackBarStatus } from "@/util/RecoilUtil";
 import {
   BABUTCHI_IS_LOCAL_MODE,
-  BABUTCHI_LAST_MILK,
   BABUTCHI_REQUEST_URL,
   useLocalStorageState,
 } from "@/util/LocalStorageUtil";
+
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 interface HideOnScrollProps {
   /**
@@ -116,6 +119,10 @@ const SettingButton = () => {
         onClose={handleClose}
       >
         <MenuItem disableRipple disableTouchRipple>
+          <GithubLink />
+        </MenuItem>
+
+        <MenuItem disableRipple disableTouchRipple>
           <IsLocalModeToggle />
         </MenuItem>
 
@@ -150,15 +157,38 @@ const IsLocalModeToggle: React.FC = () => {
   );
 
   return (
-    <ToggleButtonGroup
-      color="primary"
-      value={isLocalMode === "true"}
-      exclusive
-      onChange={handleChangeLocalMode}
-    >
-      <ToggleButton value={true}>Local</ToggleButton>
-      <ToggleButton value={false}>Online</ToggleButton>
-    </ToggleButtonGroup>
+    <Stack direction="column">
+      <Typography component={"span"} variant={"body1"}>
+        mode
+      </Typography>
+
+      <ToggleButtonGroup
+        color="primary"
+        value={isLocalMode === "true"}
+        exclusive
+        onChange={handleChangeLocalMode}
+        sx={{ height: "2rem" }}
+      >
+        <ToggleButton value={true}>Local</ToggleButton>
+        <ToggleButton value={false}>Online</ToggleButton>
+      </ToggleButtonGroup>
+    </Stack>
+  );
+};
+
+const GithubLink: React.FC = () => {
+  return (
+    <Stack direction="column">
+      <Typography component={"span"} variant={"body1"}>
+        help
+      </Typography>
+
+      <Link href="https://github.com/plesio/Babutchi" underline="none">
+        <Button variant="outlined" startIcon={<GitHubIcon />}>
+          GitHub
+        </Button>
+      </Link>
+    </Stack>
   );
 };
 
@@ -198,7 +228,7 @@ const SetterUrl: React.FC = () => {
     setUrl(urlTxt);
     setSnackStatus({
       open: true,
-      text: `URLを更新しました`,
+      text: `URLを更新しました。有効化するためページをリロードしてください。`,
     });
   }, [urlTxt]);
 
@@ -207,7 +237,10 @@ const SetterUrl: React.FC = () => {
   }, [url]);
 
   return (
-    <>
+    <Stack direction="column">
+      <Typography component={"span"} variant={"body1"}>
+        exec URL
+      </Typography>
       <Stack direction="row" spacing={1}>
         <TextField
           value={urlTxt}
@@ -227,8 +260,7 @@ const SetterUrl: React.FC = () => {
           <SaveIcon />
         </IconButton>
       </Stack>
-    </>
+    </Stack>
   );
 };
-
 export default BabuTitle;

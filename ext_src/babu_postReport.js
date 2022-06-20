@@ -33,20 +33,24 @@ function doGet() {
     .getRange(sheet.getMaxRows(), 1)
     .getNextDataCell(SpreadsheetApp.Direction.UP)
     .getRow();
-  let ret = { last_milk: "" };
+  let response = { event: "", time: "" };
 
-  for (let row = lastRow; 10 < row; row = row-1) {
+  for (let row = lastRow; 10 < row; row = row - 1) {
     let val = sheet.getRange(row, 3).getValue();
     if (
       val === EventType.mother_milk_left.name ||
       val === EventType.mother_milk_right.name ||
       val === EventType.milk.name
     ) {
-      ret.last_milk = sheet.getRange(row, 1).getValue();
+      response.time = sheet.getRange(row, 1).getValue();
+      response.time = response.time?.replace(/\(.*\) /g, "");
+      response.event =
+        EventTypeArray.find((e) => e.name === sheet.getRange(row, 3).getValue())
+          ?.id || "";
       break;
     }
   }
-  const payload = JSON.stringify(ret);
+  const payload = JSON.stringify(response);
   let output = ContentService.createTextOutput();
   output.setMimeType(ContentService.MimeType.TEXT);
   output.setContent(payload);

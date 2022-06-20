@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 /// ---
 
 // -- 最後のミルク情報をLocalStorageで覚える
-export const BABUTCHI_LAST_MILK = "BABUTCHI_LAST_MILK";
+export const BABUTCHI_LAST_MILK_EVENT = "BABUTCHI_LAST_MILK_EVENT";
+export const BABUTCHI_LAST_MILK_TIME = "BABUTCHI_LAST_MILK_TIME";
 
 // -- 自身でデプロイした GAS の接続先をLocalStorageで覚える
 export const BABUTCHI_REQUEST_URL = "BABUTCHI_REQUEST_URL";

@@ -14,8 +14,10 @@ import FlatwareIcon from "@mui/icons-material/Flatware";
 import { BabuPostStatus, CommonSnackBarStatus } from "@/util/RecoilUtil";
 
 import CircularProgress from "@mui/material/CircularProgress";
-import {BABUTCHI_REQUEST_URL, useLocalStorageState} from "@/util/LocalStorageUtil";
-
+import {
+  BABUTCHI_REQUEST_URL,
+  useLocalStorageState,
+} from "@/util/LocalStorageUtil";
 
 interface BabuButtonProps {
   title: string;
@@ -30,7 +32,7 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
   const [isDisabledBabuPost, setBabuStatus] = useRecoilState(BabuPostStatus);
   const [, setSnackStatus] = useRecoilState(CommonSnackBarStatus);
   // --
-  const [url] = useLocalStorageState(BABUTCHI_REQUEST_URL)
+  const [url] = useLocalStorageState(BABUTCHI_REQUEST_URL);
 
   const handleOnClick = useCallback(() => {
     setBabuStatus(true);
@@ -42,14 +44,14 @@ const BabuButton: React.FC<BabuButtonProps> = (props) => {
       });
       setBabuStatus(false);
     });
-  }, [babu, url]);
+  }, [babu, setBabuStatus, setSnackStatus, url]);
 
   const buttonIcon = useMemo(() => {
     if (isDisabledBabuPost) {
       return <CircularProgress size="1.5rem" />;
     }
     return <Icon babu={babu} />;
-  }, [isDisabledBabuPost]);
+  }, [babu, isDisabledBabuPost]);
 
   return (
     <Button

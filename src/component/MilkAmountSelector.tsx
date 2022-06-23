@@ -1,6 +1,11 @@
-import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import React, {ReactNode, useCallback} from "react";
-
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import React, { ReactNode, useCallback } from "react";
 
 interface Props {
   milkAmount: number;
@@ -8,14 +13,17 @@ interface Props {
 }
 
 const MilkAmountSelector: React.FC<Props> = (props) => {
-  const {milkAmount, setMilkAmount} = props
+  const { milkAmount, setMilkAmount } = props;
 
-  const onChange = useCallback((event: SelectChangeEvent<number>, _child: ReactNode) => {
-    setMilkAmount(Number(event.target.value));
-  }, [])
+  const onChange = useCallback(
+    (event: SelectChangeEvent<number>, _child: ReactNode) => {
+      setMilkAmount(Number(event.target.value));
+    },
+    [setMilkAmount]
+  );
 
   return (
-    <FormControl sx={{mb: "0.75rem", width: "8rem",}} size="small">
+    <FormControl sx={{ mb: "0.75rem", width: "8rem" }} size="small">
       <InputLabel id="milk_amount_id">ミルク量</InputLabel>
       <Select
         labelId="milk_amount_id"
@@ -33,7 +41,7 @@ const MilkAmountSelector: React.FC<Props> = (props) => {
         <MenuItem value={240}>240 ml</MenuItem>
       </Select>
     </FormControl>
-  )
-}
+  );
+};
 
 export default MilkAmountSelector;

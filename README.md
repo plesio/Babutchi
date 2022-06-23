@@ -45,7 +45,7 @@ Google Spreadsheet の記録したいシートを用意。
 
 新規の.gs を起こして、ソースに含まれている。
 
-> ext_src/babu_postReport.js
+> ext_src/babu_report.js
 
 の中身をコピーする。 ついでにその中の SHEET_NAME の定数を記録したいシート名に書き換える。
 

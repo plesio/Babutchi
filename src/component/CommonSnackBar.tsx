@@ -19,7 +19,7 @@ const CommonSnackBar: React.FC = () => {
 
       setState({ text: "", open: false });
     },
-    []
+    [setState]
   );
 
   return (

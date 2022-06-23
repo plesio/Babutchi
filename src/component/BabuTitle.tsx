@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Box,
   Button,
   IconButton,
   Link,
@@ -30,6 +29,10 @@ import {
 } from "@/util/LocalStorageUtil";
 
 import GitHubIcon from "@mui/icons-material/GitHub";
+import SummarizeIcon from "@mui/icons-material/Summarize";
+import { bool } from "prop-types";
+import { postBabu } from "@/network/post";
+import { Babu, EventType, PostType, UserType } from "@/model/BabuModel";
 
 interface HideOnScrollProps {
   /**
@@ -129,6 +132,10 @@ const SettingButton = () => {
         <MenuItem disableRipple disableTouchRipple>
           <SetterUrl />
         </MenuItem>
+
+        <MenuItem disableRipple disableTouchRipple>
+          <CallSummarize />
+        </MenuItem>
       </Menu>
     </>
   );
@@ -150,10 +157,10 @@ const IsLocalModeToggle: React.FC = () => {
       // open snackbar
       setSnackStatus({
         open: true,
-        text: `モードを変更しました`,
+        text: "モードを変更しました",
       });
     },
-    []
+    [setLocalMode, setSnackStatus]
   );
 
   return (
@@ -215,22 +222,22 @@ const SetterUrl: React.FC = () => {
         //
         setSnackStatus({
           open: true,
-          text: `URLをクリップボードにコピーしました`,
+          text: "URLをクリップボードにコピーしました",
         });
       })
       .catch((error) => {
         //
       });
-  }, []);
+  }, [setSnackStatus, url]);
 
   const handleSave = useCallback(() => {
     // change event
     setUrl(urlTxt);
     setSnackStatus({
       open: true,
-      text: `URLを更新しました。有効化するためページをリロードしてください。`,
+      text: "URLを更新しました。有効化するためページをリロードしてください。",
     });
-  }, [urlTxt]);
+  }, [setSnackStatus, setUrl, urlTxt]);
 
   useEffect(() => {
     setUrlTxt(url);
@@ -263,4 +270,49 @@ const SetterUrl: React.FC = () => {
     </Stack>
   );
 };
+
+const CallSummarize: React.FC = () => {
+  const [isSummarize, setIsSummarize] = useState<boolean>(false);
+  // --
+  const [, setSnackStatus] = useRecoilState(CommonSnackBarStatus);
+  // --
+  const [url] = useLocalStorageState(BABUTCHI_REQUEST_URL);
+
+  const handleOnClick = useCallback(() => {
+    setIsSummarize(true);
+    const babu: Babu = {
+      // -- user / event はダミー
+      user: UserType.father,
+      event: EventType.wake_up,
+      type: PostType.summary,
+    };
+
+    postBabu(babu, url, (res) => {
+      console.log(res);
+      setSnackStatus({
+        open: true,
+        text: "サマリーを更新しました",
+      });
+      setIsSummarize(false);
+    });
+  }, [setSnackStatus, url]);
+
+  return (
+    <Stack direction="column">
+      <Typography component={"span"} variant={"body1"}>
+        call summarize
+      </Typography>
+
+      <Button
+        onClick={handleOnClick}
+        disabled={isSummarize}
+        variant="outlined"
+        startIcon={<SummarizeIcon />}
+      >
+        Summarize
+      </Button>
+    </Stack>
+  );
+};
+
 export default BabuTitle;

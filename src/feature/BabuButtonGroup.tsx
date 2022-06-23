@@ -1,5 +1,5 @@
 import BabuButton from "@/component/BabuButton";
-import { EventType, UserType } from "@/model/BabuModel";
+import { EventType, PostType, UserType } from "@/model/BabuModel";
 import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import MilkAmountSelector from "@/component/MilkAmountSelector";
@@ -33,7 +33,12 @@ const BabuButtonGroup: React.FC<Props> = (props) => {
           <BabuButton
             key={EventType.pee.id}
             title={`${EventType.pee.name}`}
-            babu={{ user, event: EventType.pee, opt: undefined }}
+            babu={{
+              user,
+              event: EventType.pee,
+              type: PostType.record,
+              opt: undefined,
+            }}
             sx={{
               mb: "0.75rem",
               p: "0.5rem",
@@ -44,7 +49,12 @@ const BabuButtonGroup: React.FC<Props> = (props) => {
           <BabuButton
             key={EventType.poop.id}
             title={`${EventType.poop.name}`}
-            babu={{ user, event: EventType.poop, opt: undefined }}
+            babu={{
+              user,
+              event: EventType.poop,
+              type: PostType.record,
+              opt: undefined,
+            }}
             sx={{ p: "0.5rem", width: "8rem", backgroundColor: user.bgColor }}
           />
         </Box>
@@ -63,7 +73,12 @@ const BabuButtonGroup: React.FC<Props> = (props) => {
             <BabuButton
               key={EventType.mother_milk_left.id}
               title={`${EventType.mother_milk_left.name}`}
-              babu={{ user, event: EventType.mother_milk_left, opt: undefined }}
+              babu={{
+                user,
+                event: EventType.mother_milk_left,
+                type: PostType.record,
+                opt: undefined,
+              }}
               sx={{
                 mb: "0.75rem",
                 width: "8rem",
@@ -76,6 +91,7 @@ const BabuButtonGroup: React.FC<Props> = (props) => {
               babu={{
                 user,
                 event: EventType.mother_milk_right,
+                type: PostType.record,
                 opt: undefined,
               }}
               sx={{ p: "0.5rem", width: "8rem", backgroundColor: user.bgColor }}
@@ -101,7 +117,12 @@ const BabuButtonGroup: React.FC<Props> = (props) => {
           <BabuButton
             key={EventType.milk.id}
             title={`${EventType.milk.name}`}
-            babu={{ user, event: EventType.milk, opt: `${milkAmount}ml` }}
+            babu={{
+              user,
+              event: EventType.milk,
+              type: PostType.record,
+              opt: `${milkAmount}ml`,
+            }}
             sx={{
               mb: "0.75rem",
               p: "0.5rem",
@@ -125,7 +146,12 @@ const BabuButtonGroup: React.FC<Props> = (props) => {
           <BabuButton
             key={EventType.sleep.id}
             title={`${EventType.sleep.name}`}
-            babu={{ user, event: EventType.sleep, opt: undefined }}
+            babu={{
+              user,
+              event: EventType.sleep,
+              type: PostType.record,
+              opt: undefined,
+            }}
             sx={{
               mb: "0.75rem",
               p: "0.5rem",
@@ -136,7 +162,12 @@ const BabuButtonGroup: React.FC<Props> = (props) => {
           <BabuButton
             key={EventType.wake_up.id}
             title={`${EventType.wake_up.name}`}
-            babu={{ user, event: EventType.wake_up, opt: undefined }}
+            babu={{
+              user,
+              event: EventType.wake_up,
+              type: PostType.record,
+              opt: undefined,
+            }}
             sx={{ p: "0.5rem", width: "8rem", backgroundColor: user.bgColor }}
           />
         </Box>

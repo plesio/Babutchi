@@ -3,6 +3,7 @@ import { orange, red } from "@mui/material/colors";
 export interface Babu {
   user: UserType;
   event: EventType;
+  type?: PostType;
   opt?: string;
 }
 
@@ -37,6 +38,17 @@ export const EventTypeKeys = Object.keys(
   EventType
 ) as (keyof typeof EventType)[];
 export const EventTypeArray = Object.entries(EventType).map(([_, value]) => ({
+  id: value.id,
+  name: value.name,
+}));
+
+export const PostType = {
+  record: { id: "record", name: "" },
+  summary: { id: "summary", name: "" },
+} as const;
+export type PostType = typeof PostType[keyof typeof PostType];
+export const PostTypeKeys = Object.keys(PostType) as (keyof typeof PostType)[];
+export const PostTypeArray = Object.entries(PostType).map(([_, value]) => ({
   id: value.id,
   name: value.name,
 }));

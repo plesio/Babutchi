@@ -44,7 +44,7 @@ const LastMilk: React.FC = () => {
       }
       setLoading(false);
     });
-  }, [url]);
+  }, [setLastMilkEvent, setLastMilkTime, url]);
 
   return (
     <Box
@@ -59,7 +59,7 @@ const LastMilk: React.FC = () => {
         {isLoading ? <CircularProgress size={"1rem"} /> : <CachedIcon />}
       </IconButton>
       <Typography variant={"h6"} component={"h2"}>
-        {`Last Milk : `}
+        {"Last Milk : "}
       </Typography>
       <Typography variant={"body1"} component={"span"} pl={"0.5rem"}>
         {customDayJs(lastMilkTime, "YYYY/MM/DD HH:mm:ss").format(

@@ -1,34 +1,31 @@
+/* eslint-disable */
+
 // -- MEMO:GAS 生成時は .gs ファイルとなる
 
 function doPost(event) {
-  // -- query parameter
-  const userName = convertName(`${event.parameter.user}`);
-  const eventName = convertEvent(`${event.parameter.event}`);
-  const optName = convertOpt(event.parameter.opt);
-  //
   // eslint-disable-next-line no-undef
-  const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
-  const newLastRow = sheet.getLastRow() + 1;
-  const timeCell = sheet.getRange(newLastRow, 1);
-  const reportCell = sheet.getRange(newLastRow, 2);
-  const eventCell = sheet.getRange(newLastRow, 3);
-  const optCell = sheet.getRange(newLastRow, 4);
-  // --
-  // eslint-disable-next-line no-undef
-  const formatDate = Utilities.formatDate(
-    new Date(),
-    "JST",
-    "yyyy/MM/dd (E) HH:mm:ss"
+  const sheet = SpreadsheetApp.getActive().getSheetByName(
+    ReportConst_.TARGET_SHEET_NAME
   );
-  // --
-  timeCell.setValue(formatDate);
-  reportCell.setValue(userName);
-  eventCell.setValue(eventName);
-  optCell.setValue(optName);
+  // -- get type from query parameter
+  const postType = convertPostType_(`${event?.parameter?.type}`);
+  if (postType === PostType.record.id) {
+    // -- query parameter
+    const userName = convertName_(`${event.parameter.user}`);
+    const eventName = convertEvent_(`${event.parameter.event}`);
+    const optName = convertOpt_(event.parameter.opt);
+    writeRecordFromPost_(sheet, userName, eventName, optName);
+  } else {
+    // -- summary
+    // eslint-disable-next-line no-undef
+    omuSummaryFunction();
+  }
 }
 
 function doGet() {
-  const sheet = SpreadsheetApp.getActive().getSheetByName(SHEET_NAME);
+  const sheet = SpreadsheetApp.getActive().getSheetByName(
+    ReportConst_.TARGET_SHEET_NAME
+  );
   const lastRow = sheet
     .getRange(sheet.getMaxRows(), 1)
     .getNextDataCell(SpreadsheetApp.Direction.UP)
@@ -58,23 +55,62 @@ function doGet() {
   return output;
 }
 
+///
+
+const ReportConst_ = (function () {
+  const _a = {
+    TARGET_SHEET_NAME: "おむ",
+  };
+  Object.freeze(_a);
+  return _a;
+})();
+
+///
+
+const writeRecordFromPost_ = (sheet, userName, eventName, optName) => {
+  //
+  const newLastRow = sheet.getLastRow() + 1;
+  const timeCell = sheet.getRange(newLastRow, 1);
+  const reportCell = sheet.getRange(newLastRow, 2);
+  const eventCell = sheet.getRange(newLastRow, 3);
+  const optCell = sheet.getRange(newLastRow, 4);
+  // --
+  // eslint-disable-next-line no-undef
+  const formatDate = Utilities.formatDate(
+    new Date(),
+    "JST",
+    "yyyy/MM/dd (E) HH:mm:ss"
+  );
+  // --
+  timeCell.setValue(formatDate);
+  reportCell.setValue(userName);
+  eventCell.setValue(eventName);
+  optCell.setValue(optName);
+};
+
 /** @param {string} src */
-const convertName = (src) => {
+const convertPostType_ = (src) => {
+  const ret = PostTypeArray.find((it) => it.id === src)?.id;
+  if (ret === undefined) {
+    return PostType.record.id;
+  }
+  return ret;
+};
+
+/** @param {string} src */
+const convertName_ = (src) => {
   return UserTypeArray.find((it) => it.id === src)?.name;
 };
 
 /** @param {string} src */
-const convertEvent = (src) => {
+const convertEvent_ = (src) => {
   return EventTypeArray.find((it) => it.id === src)?.name;
 };
 
 /** @param {string} src */
-const convertOpt = (src) => {
+const convertOpt_ = (src) => {
   return src !== "_" ? src : "";
 };
-
-// -- 記録するシート名を記述.
-const SHEET_NAME = "おむ";
 
 const UserType = {
   father: { id: "father", name: "父" },
@@ -96,6 +132,15 @@ const EventType = {
   milk: { id: "milk", name: "ミルク" },
 };
 const EventTypeArray = Object.entries(EventType).map(([_, value]) => ({
+  id: value.id,
+  name: value.name,
+}));
+
+const PostType = {
+  record: { id: "record", name: "" },
+  summary: { id: "summary", name: "" },
+};
+const PostTypeArray = Object.entries(PostType).map(([_, value]) => ({
   id: value.id,
   name: value.name,
 }));

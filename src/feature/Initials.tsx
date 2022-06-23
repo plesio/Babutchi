@@ -20,7 +20,7 @@ const Initials: React.FC = () => {
     if (isLocalMode === "true") {
       getUrl(setUrl);
     }
-  }, [isLocalMode]);
+  }, [isLocalMode, setUrl]);
 
   return <div />;
 };
